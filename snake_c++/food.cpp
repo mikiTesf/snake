@@ -51,6 +51,6 @@ void food::setNextPosition(std::vector<abdomen> allAbdomen, int width, int lengt
 }
 
 void food::draw() {
-	gotoxy(foodPos.getX(), foodPos.getY());
+	gotoPos(this->foodPos);
 	std::cout << (char)248;
 }

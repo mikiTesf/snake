@@ -1,15 +1,6 @@
 #pragma once
 #include <Windows.h>
 
-static void gotoxy(int x, int y) {
-	static HANDLE h = NULL;
-	if (!h) {
-		h = GetStdHandle(STD_OUTPUT_HANDLE);
-	}
-	COORD c = { (short)x, (short)y };
-	SetConsoleCursorPosition(h, c);
-}
-
 class position
 {
 private:
@@ -33,3 +24,20 @@ public:
 	bool operator == (position);
 };
 
+static void gotoxy(int x, int y) {
+	static HANDLE h = NULL;
+	if (!h) {
+		h = GetStdHandle(STD_OUTPUT_HANDLE);
+	}
+	COORD c = { (short)x, (short)y };
+	SetConsoleCursorPosition(h, c);
+}
+
+static void gotoPos(position pos) {
+	static HANDLE h = NULL;
+	if (!h) {
+		h = GetStdHandle(STD_OUTPUT_HANDLE);
+	}
+	COORD c = { (short) pos.getX(), (short) pos.getY() };
+	SetConsoleCursorPosition(h, c);
+}

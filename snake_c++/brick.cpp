@@ -35,9 +35,9 @@ position brick::getPosition() {
 }
 
 void brick::draw() {
-	gotoxy(brickPos.getX(), brickPos.getY());
+	gotoPos(this->brickPos);
 	// the 254th character is ■
-	// the 219th character is 
+	// the 219th character is █ 
 	if (this->horizontal)
 		std::cout << (char)254;
 	else

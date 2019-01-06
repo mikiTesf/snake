@@ -2,19 +2,21 @@
 #include "snake.h"
 #include "wall.h"
 
-snake::snake() {
+snake::snake(position headPosition) {
 	abdomen head;
-	head.setPosition(position(wall::X_OFFSET + 12, wall::Y_OFFSET + 5));
-	this->xenxia.push_back(head);
+	head.setPosition(position(wall::X_OFFSET + headPosition.getX(), wall::Y_OFFSET + headPosition.getY()));
+	this->xenxia.emplace_back(head);
 
 	abdomen thorax;
-	thorax.setPosition(position(wall::X_OFFSET + 11, wall::Y_OFFSET + 5));
-	this->xenxia.push_back(thorax);
+	thorax.setPosition(position(head.getPosition().getX() - 1, head.getPosition().getY()));
+	this->xenxia.emplace_back(thorax);
 
 	abdomen butt; // or ass
-	butt.setPosition(position(wall::X_OFFSET + 10, wall::Y_OFFSET + 5));
-	this->xenxia.push_back(butt);
+	butt.setPosition(position(thorax.getPosition().getX() - 1, head.getPosition().getY()));
+	this->xenxia.emplace_back(butt);
 }
+
+snake::snake() {}
 
 snake::~snake(){}
 
@@ -22,26 +24,12 @@ std::vector<abdomen> snake::getAllAbdomen() {
 	return this->xenxia;
 }
 
-bool snake::collided(std::vector<brick> wallBricks) {
-	position snakeHeadPosition = getHeadPosition();
-	for (brick brk : wallBricks) {
-		if (snakeHeadPosition == brk.getPosition()) {
-			return true;
-		}
-	}
-	return false;
-}
-
-bool snake::ateFood(position foodPosition) {
-	return this->getHeadPosition() == foodPosition;
-}
-
 position snake::getHeadPosition() {
 	return this->xenxia[0].getPosition();
 }
 
 void snake::grow() {
-	this->xenxia.push_back(abdomen());
+	this->xenxia.emplace_back(abdomen());
 }
 
 void snake::move(position nextPos) {
@@ -57,6 +45,10 @@ void snake::move(position nextPos) {
 	}
 }
 
+bool snake::ateFood(position foodPosition) {
+	return this->getHeadPosition() == foodPosition;
+}
+
 void snake::draw() {
 	for (abdomen bodyPart : this->xenxia) {
 		bodyPart.draw();
@@ -64,10 +56,27 @@ void snake::draw() {
 	snake::clearTrail();
 }
 
+void snake::disappear() {
+	for (abdomen bodyPart : this->xenxia) {
+		gotoPos(bodyPart.getPosition());
+		std::cout << " ";
+	}
+}
+
 void snake::clearTrail() {
 	/* the last abdomen in the vector (xenxia) will still be left on the console
 	even after it has displaced to the next coordinate. Therefore, an empty
 	space must be drawn in it's place to avoid trails */
-	gotoxy(lastAbdomenPosition.getX(), lastAbdomenPosition.getY());
+	gotoPos(lastAbdomenPosition);
 	std::cout << " ";
+}
+
+bool snake::collided(std::vector<brick> wallBricks) {
+	position snakeHeadPosition = getHeadPosition();
+	for (brick brk : wallBricks) {
+		if (snakeHeadPosition == brk.getPosition()) {
+			return true;
+		}
+	}
+	return false;
 }

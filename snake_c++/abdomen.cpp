@@ -12,7 +12,7 @@ position abdomen::getPosition() {
 }
 
 void abdomen::draw() {
-	gotoxy(this->pos.getX(), this->pos.getY());
+	gotoPos(this->pos);
 	std::cout << (char)254;
 }
 

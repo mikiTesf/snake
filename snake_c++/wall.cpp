@@ -13,25 +13,25 @@ void wall::setDimensions(int WIDTH, int HEIGHT) {
 	for (int x = 0; x < this->WIDTH; x++) {
 		brick newBrick(this->X_OFFSET + x, this->Y_OFFSET);
 		newBrick.setHorizontal(true);
-		this->jegol.push_back(newBrick);
+		this->jegol.emplace_back(newBrick);
 	}
 	// bottom width
 	for (int x = 0; x < this->WIDTH + 1; x++) {
 		brick newBrick(this->X_OFFSET + x, this->Y_OFFSET + this->HEIGHT);
 		newBrick.setHorizontal(true);
-		this->jegol.push_back(newBrick);
+		this->jegol.emplace_back(newBrick);
 	}
 	// left length
 	for (int y = 0; y < this->HEIGHT + 1; y++) {
 		brick newBrick(this->X_OFFSET, y + this->Y_OFFSET);
 		newBrick.setHorizontal(false);
-		this->jegol.push_back(newBrick);
+		this->jegol.emplace_back(newBrick);
 	}
 	// right length
 	for (int y = 0; y < this->HEIGHT + 1; y++) {
 		brick newBrick(this->WIDTH + this->X_OFFSET, y + this->Y_OFFSET);
 		newBrick.setHorizontal(false);
-		this->jegol.push_back(newBrick);
+		this->jegol.emplace_back(newBrick);
 	}
 }
 
