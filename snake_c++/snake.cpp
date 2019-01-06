@@ -11,12 +11,16 @@ snake::snake() {
 	thorax.setPosition(position(wall::X_OFFSET + 11, wall::Y_OFFSET + 5));
 	this->xenxia.push_back(thorax);
 
-	abdomen butt;
+	abdomen butt; // or ass
 	butt.setPosition(position(wall::X_OFFSET + 10, wall::Y_OFFSET + 5));
 	this->xenxia.push_back(butt);
 }
 
 snake::~snake(){}
+
+std::vector<abdomen> snake::getAllAbdomen() {
+	return this->xenxia;
+}
 
 bool snake::collided(std::vector<brick> wallBricks) {
 	position snakeHeadPosition = getHeadPosition();

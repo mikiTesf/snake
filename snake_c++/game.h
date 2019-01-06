@@ -18,16 +18,18 @@ public:
 		const char RIGHT = 'd';
 		const char UP = 'w';
 		const char DOWN = 's';
+		// wall dimensions
+		const int WIDTH  = 50;
+		const int HEIGHT = 20;
 
 		wall jegol;
 		snake xenxia;
 		food fud;
 		// positions used during the game
-		position nextPosition(wall::X_OFFSET + 13, wall::Y_OFFSET + 5);
-		position foodPosition(30, 28);
-		fud.setPosition(foodPosition);
+		position nextPosition(xenxia.getHeadPosition().getX() + 1, xenxia.getHeadPosition().getY());
+		fud.setPosition(position(35, 15));
 		//\ /\ \/ /\ \/ /\ \/ /\ \/ /\ \/ /\ \/
-		jegol.setDimensions(60, 20);
+		jegol.setDimensions(WIDTH, HEIGHT);
 		jegol.draw();
 		xenxia.draw();
 		fud.draw();
@@ -58,12 +60,16 @@ public:
 			xenxia.move(nextPosition);
 
 			if (xenxia.collided(jegol.getBricks())) {
-				std::cout << "you done collided nigga!!";
+				gotoxy(wall::X_OFFSET, wall::Y_OFFSET + HEIGHT + 3);
+				std::cout << "You collided. Game over! ";
+				std::cout << "Press any key to quit...";
+				break;
 			}
 
-			if (xenxia.ateFood(foodPosition)) {
-				foodPosition = fud.getNextPosition();
+			if (xenxia.ateFood(fud.getPosition())) {
 				xenxia.grow();
+				fud.setNextPosition(xenxia.getAllAbdomen(), WIDTH, HEIGHT);
+				fud.draw();
 			}
 
 			xenxia.draw();

@@ -8,18 +8,19 @@ class snake
 private:
 	std::vector<abdomen> xenxia;
 	position lastAbdomenPosition;
-	position getHeadPosition();
 public:
 	snake();
 	~snake();
 
-	bool collided(std::vector<brick>);
-	bool ateFood(position);
 	std::vector<abdomen> getAllAbdomen();
 
-	void grow();
+	position getHeadPosition();
 	void move(position);
+	void grow();
 	void draw();
 	void clearTrail();
+
+	bool collided(std::vector<brick>);
+	bool ateFood(position);
 };
 

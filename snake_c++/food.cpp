@@ -1,5 +1,6 @@
 ﻿#include <iostream>
 #include <iomanip>
+#include <vector>
 #include "food.h"
 #include "abdomen.h"
 #include "wall.h"
@@ -26,8 +27,7 @@ bool food::checkPositionAgainstSnake(std::vector<abdomen> allAbdomen) {
 	return false;
 }
 
-position food::getNextPosition(std::vector<abdomen> allAbdomen, int width, int length) {
-	position nextPosition;
+void food::setNextPosition(std::vector<abdomen> allAbdomen, int width, int length) {
 	static bool firstTime = true;
 
 	if (firstTime) {
@@ -40,19 +40,17 @@ position food::getNextPosition(std::vector<abdomen> allAbdomen, int width, int l
 		// deciding horizontal coordinate (x)
 		int minimum = wall::X_OFFSET + 1;
 		int maximum = wall::X_OFFSET + width;
-		int range = maximum - minimum + 1;
-		nextPosition.setX((rand() % range) + minimum);
+		int range = maximum - minimum;
+		this->foodPos.setX((rand() % range) + minimum);
 		// deciding vertical coordinate (y)
 		minimum = wall::Y_OFFSET + 1;
 		maximum = wall::Y_OFFSET + length;
-		range = maximum - minimum + 1;
-		nextPosition.setY((rand() % range) + minimum);
+		range = maximum - minimum;
+		this->foodPos.setY((rand() % range) + minimum);
 	} while (this->checkPositionAgainstSnake(allAbdomen));
-	
-	return nextPosition;
 }
 
 void food::draw() {
 	gotoxy(foodPos.getX(), foodPos.getY());
-	std::cout << (char)223;
+	std::cout << (char)248;
 }

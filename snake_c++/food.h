@@ -14,7 +14,7 @@ public:
 	position getPosition();
 
 	bool checkPositionAgainstSnake(std::vector<abdomen>);
-	position getNextPosition(std::vector<abdomen>, int, int);
+	void setNextPosition(std::vector<abdomen>, int, int);
 
 	void draw();
 };
